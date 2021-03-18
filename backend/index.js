@@ -18,7 +18,7 @@ const idsLeft = [
   "Tc7JpjUC3",
   "F18pGKU28",
   "cC7_hMs3r",
-  "lv7d7JtG",
+  "_lv7d7JtG",
   "bKCZscbsU",
   "KF8Yr9LNm",
   "cQW1T9rg0",
@@ -44,7 +44,9 @@ console.log(coordinates);
 
 app.post("/parking", (req, res) => {
   Object.keys(req.body).forEach((id) => {
-    coordinates[id].isFree = req.body[id].isFree;
+    if(coordinates[id]) {
+      coordinates[id].isFree = req.body[id].isFree;
+    }
   });
   res.send(coordinates);
 });
