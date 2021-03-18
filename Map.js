@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View, Modal, ImageBackground, Image } from "react-native";
 import navigation from "./Navigation";
 
 const pointsSzechenyi = [];
@@ -178,8 +178,41 @@ function Map() {
   };
   console.log(radius);
 
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const [imageVersion, setImageVersion] = useState(0);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setImageVersion((version) => version + 1)
+      const newImageUrl = `https://live.onlinecamera.net/207szegedomterthumbnail2.jpg?uniq=${imageVersion}`;
+      await Image.prefetch(newImageUrl);
+      setImageUrl(newImageUrl)
+    }, 10000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [setImageUrl, setImageVersion, imageVersion])
+
   return (
     <View style={styles.container}>
+      <Modal
+          animationType="slide"
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+      >
+        {imageUrl && <Image
+            style={styles.liveImage}
+            fadeDuration={0}
+            source={{
+              uri: imageUrl,
+            }}
+        />}
+      </Modal>
       <MapView
         provider={"google"}
         style={styles.map}
@@ -223,8 +256,11 @@ function Map() {
         />
         <Marker
           coordinate={{ latitude: 46.247744, longitude: 20.148432 }}
-          image={require("./assets/camera_small.png")}
-        />
+          onPress={() => setModalVisible(true)}
+          anchor={{x: 0,y: 0}}
+        >
+          <Image style={styles.cameraMarker} source={require("./assets/camera_small.png")}/>
+        </Marker>
       </MapView>
     </View>
   );
@@ -237,9 +273,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  cameraMarker: {
+    width: 20,
+    height: 20,
+  },
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  liveImage: {
+    flex: 1,
+    resizeMode: "contain",
+    justifyContent: "center"
   },
 });
 
