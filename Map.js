@@ -3,6 +3,7 @@ import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
 import { Dimensions, StyleSheet, View, Modal, ImageBackground, Image } from "react-native";
 import navigation from "./Navigation";
 import ParkingMeters from "./ParkingMeters";
+import useParkingLots from "./useParkingLots";
 
 const pointsSzechenyi = [];
 let startI = 46.252995;
@@ -75,6 +76,7 @@ const gradient = {
 };
 
 function Map() {
+  const parkingLots = useParkingLots()
   function handlePress(coordinate) {
     navigation(coordinate.latitude, coordinate.longitude);
   }
@@ -177,7 +179,6 @@ function Map() {
       setRadius(newRadius);
     }
   };
-  console.log(radius);
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -189,7 +190,6 @@ function Map() {
       setImageVersion((version) => version + 1)
       const newImageUrl = `https://live.onlinecamera.net/207szegedomterthumbnail2.jpg?uniq=0.961870666192049${imageVersion.toString().split('').reverse().join('')}`;
       await Image.prefetch(newImageUrl);
-      console.log(newImageUrl)
       setImageUrl(newImageUrl)
     }, 5000)
 
@@ -249,13 +249,13 @@ function Map() {
           opacity={0.5}
           heatmapMode={"POINTS_WEIGHT"}
         />
-        <Heatmap
-          points={pointsDani}
-          gradient={gradient}
-          radius={radius}
-          opacity={0.5}
-          heatmapMode={"POINTS_WEIGHT"}
-        />
+        {parkingLots.length > 0 && <Heatmap
+            points={parkingLots}
+            gradient={gradient}
+            radius={radius}
+            opacity={0.5}
+            heatmapMode={"POINTS_WEIGHT"}
+        />}
         <Marker
           coordinate={{ latitude: 46.247744, longitude: 20.148432 }}
           onPress={() => setModalVisible(true)}
