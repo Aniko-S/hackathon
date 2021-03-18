@@ -1,45 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import MapView, {Polygon, Heatmap, Marker} from "react-native-maps";
 import { Dimensions, StyleSheet, View } from "react-native";
 import navigation from "./Navigation"
 
 const pointsSzechenyi = [];
-let startI = 46.250995;
-let startJ = 20.145482;
-let endI = 46.259356;
-let endJ = 20.161681;
-let stepI = (endI - startI) / 100;
-let stepJ = (endJ - startJ) / 100;
+let startI = 46.252995;
+let startJ = 20.149482;
+let endI = 46.254356;
+let endJ = 20.150681;
+let stepI = (endI - startI) / 20;
+let stepJ = (endJ - startJ) / 20;
 for (
-    let i = startI;
-    i <= endI;
-    i += stepI
+  let i = startI, j = startJ;
+  i <= endI && j <= endJ;
+  i += stepI, j += stepJ
 ) {
-    for (
-        let j = startJ;
-        j <= endJ;
-        j += stepJ
-    ) {
-        pointsSzechenyi.push({ latitude: i, longitude: j, weight: Math.random() });
-    }
+  pointsSzechenyi.push({
+    latitude: i,
+    longitude: j,
+    weight: 1,
+  });
 }
-
-console.log(pointsSzechenyi)
 
 const pointsDani = [];
 startI = 46.249973;
 startJ = 20.142645;
 endI = 46.251012;
 endJ = 20.143532;
-stepI = (endI - startI) / 40;
-stepJ = (endJ - startJ) / 40;
+stepI = (endI - startI) / 20;
+stepJ = (endJ - startJ) / 20;
 for (
     let i = startI, j = startJ;
   i <= endI && j <= endJ;
   i += stepI, j += stepJ
 ) {
-  pointsDani.push({ latitude: i, longitude: j, weight: 0.5 });
+  pointsDani.push({
+    latitude: i,
+    longitude: j,
+    weight: Math.round(Math.random()) + 0.1,
+  });
 }
+
+const gradient = {
+  colors: [
+    "rgb(0, 225, 0)",
+    "rgb(0, 225, 0)",
+    "rgb(255, 225, 0)",
+    "rgb(255, 153, 51)",
+    "rgb(255, 0, 0)",
+  ],
+  startPoints: [0.1, 0.6, 0.8, 0.9, 1],
+  colorMapSize: 256,
+};
+
+const pointsDeak1 = [{ latitude: 46.252987, longitude: 20.150817, weight: 60 }];
+const pointsDeak2 = [{ latitude: 46.251853, longitude: 20.149919, weight: 30 }];
+const pointsSzechenyi2 = [
+  { latitude: 46.253483, longitude: 20.149729, weight: 80 },
+];
+const pointsVictorH1 = [
+  { latitude: 46.251822, longitude: 20.149278, weight: 70 },
+];
+const pointsVictorH2 = [
+  { latitude: 46.251501, longitude: 20.15004, weight: 100 },
+];
+const pointsKissErno1 = [
+  { latitude: 46.254992, longitude: 20.147608, weight: 90 },
+];
+const pointsKissErno2 = [
+  { latitude: 46.254699, longitude: 20.148272, weight: 50 },
+];
+const pointsFeketeSas = [
+  { latitude: 46.255136, longitude: 20.148202, weight: 10 },
+];
 
 function Map() {
 
@@ -47,6 +80,7 @@ function Map() {
         navigation(coordinate.latitude, coordinate.longitude)
     }
     
+  const [radius, setRadius] = useState(10);
   const greenCordinates = [
     { latitude: 46.256037, longitude: 20.157685 },
     { latitude: 46.256596, longitude: 20.157353 },
@@ -137,17 +171,24 @@ function Map() {
     { latitude: 46.2453489, longitude: 20.1472145 },
   ];
 
+  const onRegionChangeHandler = (region) => {
+    const newRadius = 1 / (3 * region.latitudeDelta);
+    setRadius(newRadius);
+  };
+  console.log(radius);
+
   return (
-        <View style={styles.container}>
-            <MapView
-                provider={"google"}
-                style={styles.map}
-                initialRegion={{
-                    latitude: 46.253,
-                    longitude: 20.148,
+    <View style={styles.container}>
+      <MapView
+        provider={"google"}
+        style={styles.map}
+        initialRegion={{
+          latitude: 46.253,
+          longitude: 20.148,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        onRegionChange={onRegionChangeHandler}
         onLongPress={ (event) => handlePress(event.nativeEvent.coordinate) }
       >
 
@@ -180,8 +221,27 @@ function Map() {
               colorMapSize: 256
           }}
           radius={250}
+        {/*<Polygon
+          coordinates={yellowCordinates}
+          holes={[greenCordinates]}
+          strokeColor="rgba(225, 209, 10, 1)"
+          fillColor="rgba(225, 209, 10, 0.3)"
+          strokeWidth={1}
+        />
+        {
+          <Polygon
+            coordinates={greenCordinates}
+            strokeColor="rgba(63, 195, 128, 1)"
+            fillColor="rgba(63, 195, 128, 0.3)"
+            strokeWidth={1}
+          />
+        }*/}
+        <Heatmap
+          points={pointsSzechenyi}
+          gradient={gradient}
+          radius={radius}
           opacity={0.5}
-          //maxIntensity={10}
+          heatmapMode={"POINTS_WEIGHT"}
         />
                 <Marker coordinate={{latitude: 46.247744, longitude: 20.148432}}
                         image={require('./assets/camera_small.png')}/>
