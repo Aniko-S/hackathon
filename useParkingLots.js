@@ -15,18 +15,17 @@ export default function useParkingLots() {
             Object.keys(parkingLotsData).forEach((id) => {
                 newParkingLots.push(parkingLotsData[id])
             })
-            console.log(newParkingLots.filter(({isFree}) => !isFree))
-            setParkingLots(newParkingLots)
-        }, 10000)
+            setParkingLots(newParkingLots.map(point => ({
+                latitude: point.latitude,
+                longitude: point.longitude,
+                weight: point.isFree ? 0.1 : 1,
+            })))
+        }, 3000)
 
         return () => {
             clearInterval(interval)
         }
     }, [])
 
-    return parkingLots.map(point => ({
-        latitude: point.latitude,
-        longitude: point.longitude,
-        weight: point.isFree ? 1 : 1,
-    }))
+    return parkingLots
 }
