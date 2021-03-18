@@ -37,6 +37,25 @@ for (
   pointsDani.push({
     latitude: i,
     longitude: j,
+    weight: 0.1,
+  });
+}
+
+const pointsDom = [];
+startI = 46.247625;
+startJ = 20.14873;
+endI = 46.248365;
+endJ = 20.149352;
+stepI = (endI - startI) / 20;
+stepJ = (endJ - startJ) / 20;
+for (
+  let i = startI, j = startJ;
+  i <= endI && j <= endJ;
+  i += stepI, j += stepJ
+) {
+  pointsDani.push({
+    latitude: i,
+    longitude: j,
     weight: Math.round(Math.random()),
   });
 }
@@ -53,27 +72,6 @@ const gradient = {
   startPoints: [0.1, 0.3, 0.8, 0.85, 0.99, 1],
   colorMapSize: 256,
 };
-
-const pointsDeak1 = [{ latitude: 46.252987, longitude: 20.150817, weight: 60 }];
-const pointsDeak2 = [{ latitude: 46.251853, longitude: 20.149919, weight: 30 }];
-const pointsSzechenyi2 = [
-  { latitude: 46.253483, longitude: 20.149729, weight: 80 },
-];
-const pointsVictorH1 = [
-  { latitude: 46.251822, longitude: 20.149278, weight: 70 },
-];
-const pointsVictorH2 = [
-  { latitude: 46.251501, longitude: 20.15004, weight: 100 },
-];
-const pointsKissErno1 = [
-  { latitude: 46.254992, longitude: 20.147608, weight: 90 },
-];
-const pointsKissErno2 = [
-  { latitude: 46.254699, longitude: 20.148272, weight: 50 },
-];
-const pointsFeketeSas = [
-  { latitude: 46.255136, longitude: 20.148202, weight: 10 },
-];
 
 function Map() {
   function handlePress(coordinate) {
