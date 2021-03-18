@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
 import { Dimensions, StyleSheet, View } from "react-native";
 import navigation from "./Navigation";
+import parkingzones from "./ParkingZones";
+import ParkingZones from "./ParkingZones";
 
 const pointsSzechenyi = [];
 let startI = 46.252995;
@@ -223,6 +225,7 @@ function Map() {
           coordinate={{ latitude: 46.247744, longitude: 20.148432 }}
           image={require("./assets/camera_small.png")}
         />
+        <ParkingZones/>
       </MapView>
     </View>
   );
