@@ -1,5 +1,5 @@
 import React from "react";
-import MapView, { Polygon, Heatmap } from "react-native-maps";
+import MapView, {Polygon, Heatmap, Marker} from "react-native-maps";
 import { Dimensions, StyleSheet, View } from "react-native";
 import navigation from "./Navigation"
 
@@ -11,9 +11,9 @@ let endJ = 20.161681;
 let stepI = (endI - startI) / 100;
 let stepJ = (endJ - startJ) / 100;
 for (
-  let i = startI;
-  i <= endI;
-  i += stepI
+    let i = startI;
+    i <= endI;
+    i += stepI
 ) {
     for (
         let j = startJ;
@@ -34,7 +34,7 @@ endJ = 20.143532;
 stepI = (endI - startI) / 40;
 stepJ = (endJ - startJ) / 40;
 for (
-  let i = startI, j = startJ;
+    let i = startI, j = startJ;
   i <= endI && j <= endJ;
   i += stepI, j += stepJ
 ) {
@@ -42,7 +42,7 @@ for (
 }
 
 function Map() {
-    
+
     function handlePress(coordinate) {
         navigation(coordinate.latitude, coordinate.longitude)
     }
@@ -138,13 +138,13 @@ function Map() {
   ];
 
   return (
-    <View style={styles.container}>
-      <MapView
-          provider={"google"}
-        style={styles.map}
-        initialRegion={{
-          latitude: 46.253,
-          longitude: 20.148,
+        <View style={styles.container}>
+            <MapView
+                provider={"google"}
+                style={styles.map}
+                initialRegion={{
+                    latitude: 46.253,
+                    longitude: 20.148,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -152,27 +152,27 @@ function Map() {
       >
 
 <Polygon
-            key="1"
-          coordinates={yellowCordinates}
-          strokeColor="rgba(225, 209, 10, 1)"
-          fillColor="rgba(225, 209, 10, 0.3)"
-          strokeWidth={1}
-        /> 
+                    key="1"
+                    coordinates={yellowCordinates}
+                    strokeColor="rgba(225, 209, 10, 1)"
+                    fillColor="rgba(225, 209, 10, 0.3)"
+                    strokeWidth={1}
+                />
                 <Polygon
-        key='2'
-            coordinates={greenCordinates}
-            strokeColor="rgba(63, 195, 128, 1)"
-            fillColor="rgba(63, 195, 128, 0.3)"
-            strokeWidth={1}
-        />  
-     
-        <MapView.Heatmap
-          points={pointsSzechenyi}
-          gradient={{
-              colors: [
-                  "rgba(0, 0, 255, 0)",
-                  "#BBCF4C",
-                  "#EEC20B",
+                    key='2'
+                    coordinates={greenCordinates}
+                    strokeColor="rgba(63, 195, 128, 1)"
+                    fillColor="rgba(63, 195, 128, 0.3)"
+                    strokeWidth={1}
+                />
+
+                <MapView.Heatmap
+                    points={pointsSzechenyi}
+                    gradient={{
+                        colors: [
+                            "rgba(0, 0, 255, 0)",
+                            "#BBCF4C",
+                            "#EEC20B",
                   "#F29305",
                   "#E50000",
               ],
@@ -183,22 +183,24 @@ function Map() {
           opacity={0.5}
           //maxIntensity={10}
         />
+                <Marker coordinate={{latitude: 46.247744, longitude: 20.148432}}
+                        image={require('./assets/camera_small.png')}/>
       </MapView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    map: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height,
+    },
 });
 
 export default Map;
