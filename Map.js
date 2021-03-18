@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
 import { Dimensions, StyleSheet, View, Modal, ImageBackground, Image } from "react-native";
 import navigation from "./Navigation";
+import ParkingMeters from "./ParkingMeters";
 
 const pointsSzechenyi = [];
 let startI = 46.252995;
@@ -262,6 +263,7 @@ function Map() {
         >
           <Image style={styles.cameraMarker} source={require("./assets/camera_small.png")}/>
         </Marker>
+        <ParkingMeters/>
       </MapView>
     </View>
   );
