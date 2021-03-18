@@ -53,43 +53,6 @@ function Map() {
     ]
 
     const yellowCordinates = [
-        {latitude: 46.256037, longitude: 20.157685},
-        {latitude: 46.256596, longitude: 20.157353},
-        {latitude: 46.257223, longitude: 20.157388},
-        {latitude: 46.257301, longitude: 20.157627},
-        {latitude: 46.257164, longitude: 20.156986},
-        {latitude: 46.257019, longitude: 20.156200},
-        {latitude: 46.256752, longitude: 20.155908},
-        {latitude: 46.257199, longitude: 20.153939},
-        {latitude: 46.257717, longitude: 20.152619},
-        {latitude: 46.258602, longitude: 20.151074},
-        {latitude: 46.258897, longitude: 20.150639},
-        {latitude: 46.259014, longitude: 20.150585},
-        {latitude: 46.259042, longitude: 20.150209},
-        {latitude: 46.258973, longitude: 20.149935},
-        {latitude: 46.258973, longitude: 20.149935},
-        {latitude: 46.258785, longitude: 20.148335},
-        {latitude: 46.256999, longitude: 20.146313},
-        {latitude: 46.257557, longitude: 20.145195},
-        {latitude: 46.257396, longitude: 20.145015},
-        {latitude: 46.257418, longitude: 20.144913},
-        {latitude: 46.255076, longitude: 20.142915},
-        {latitude: 46.255067, longitude: 20.142979},
-        {latitude: 46.254985, longitude: 20.142920},
-        {latitude: 46.254476, longitude: 20.144188},
-        {latitude: 46.252459, longitude: 20.143127},
-        {latitude: 46.251168, longitude: 20.142700},
-        {latitude: 46.251031, longitude: 20.143510},
-        {latitude: 46.249926, longitude: 20.142609},
-        {latitude: 46.249595, longitude: 20.143092},
-        {latitude: 46.248650, longitude: 20.141299},
-        {latitude: 46.247475, longitude: 20.143384},
-        {latitude: 46.246019, longitude: 20.145763},
-        {latitude: 46.245559, longitude: 20.147200},
-        {latitude: 46.246605, longitude: 20.148080},
-        {latitude: 46.245626, longitude: 20.150097},
-        {latitude: 46.245589, longitude: 20.150279},
-        {latitude: 46.245733, longitude: 20.150385},
         {latitude: 46.2457273, longitude: 20.1502079},
         {latitude: 46.2457532, longitude: 20.1505297},
         {latitude: 46.2458015, longitude: 20.1508516},
@@ -128,15 +91,6 @@ function Map() {
         {latitude: 46.2425886, longitude: 20.1444948},
         {latitude: 46.2436237, longitude: 20.1457715},
         {latitude: 46.2453489, longitude: 20.1472145}
-        // {latitude: 46.246074, longitude: 20.150657},
-        // {latitude: 46.250290, longitude: 20.151940},
-        // {latitude: 46.251844, longitude: 20.152584},
-        // {latitude: 46.252923, longitude: 20.153179},
-        // {latitude: 46.253631, longitude: 20.153581},
-        // {latitude: 46.254344, longitude: 20.154206},
-        // {latitude: 46.255104, longitude: 20.155220},
-        // {latitude: 46.255690, longitude: 20.156545},
-        // {latitude: 46.256035, longitude: 20.157639},
     ]
 
     return (
@@ -151,21 +105,18 @@ function Map() {
                 }}
             >
                 <Polygon
-                    //key={polygon.id}
                     coordinates={yellowCordinates}
-                    //holes={polygon.holes}
-                    strokeColor="rgba(245, 229, 27, 1)"
-                    fillColor="rgba(245, 229, 27, 0.4)"
+                    holes={[greenCordinates]}
+                    strokeColor="rgba(225, 209, 10, 1)"
+                    fillColor="rgba(225, 209, 10, 0.3)"
                     strokeWidth={1}
                 />
-                {/* <Polygon
-              //key={polygon.id}
-              coordinates={greenCordinates}
-              //holes={polygon.holes}
-              strokeColor="rgba(63, 195, 128, 1)"
-              fillColor="rgba(63, 195, 128, 0.2)"
-              strokeWidth={1}
-            /> */}
+                {<Polygon
+                    coordinates={greenCordinates}
+                    strokeColor="rgba(63, 195, 128, 1)"
+                    fillColor="rgba(63, 195, 128, 0.3)"
+                    strokeWidth={1}
+                />}
             </MapView>
 
         </View>
