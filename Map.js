@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View, Modal, ImageBackground, Image } from "react-native";
 import navigation from "./Navigation";
 import ParkingMeters from "./ParkingMeters";
 
@@ -38,42 +38,41 @@ for (
   pointsDani.push({
     latitude: i,
     longitude: j,
-    weight: Math.round(Math.random()) + 0.1,
+    weight: 0.1,
+  });
+}
+
+const pointsDom = [];
+startI = 46.247625;
+startJ = 20.14873;
+endI = 46.248365;
+endJ = 20.149352;
+stepI = (endI - startI) / 20;
+stepJ = (endJ - startJ) / 20;
+for (
+  let i = startI, j = startJ;
+  i <= endI && j <= endJ;
+  i += stepI, j += stepJ
+) {
+  pointsDani.push({
+    latitude: i,
+    longitude: j,
+    weight: Math.round(Math.random()),
   });
 }
 
 const gradient = {
   colors: [
     "rgb(0, 225, 0)",
-    "rgb(0, 225, 0)",
+    "rgb(178, 225, 102)",
+    "rgb(153, 225, 51)",
     "rgb(255, 225, 0)",
     "rgb(255, 153, 51)",
     "rgb(255, 0, 0)",
   ],
-  startPoints: [0.1, 0.6, 0.8, 0.9, 1],
+  startPoints: [0.1, 0.3, 0.8, 0.85, 0.99, 1],
   colorMapSize: 256,
 };
-
-const pointsDeak1 = [{ latitude: 46.252987, longitude: 20.150817, weight: 60 }];
-const pointsDeak2 = [{ latitude: 46.251853, longitude: 20.149919, weight: 30 }];
-const pointsSzechenyi2 = [
-  { latitude: 46.253483, longitude: 20.149729, weight: 80 },
-];
-const pointsVictorH1 = [
-  { latitude: 46.251822, longitude: 20.149278, weight: 70 },
-];
-const pointsVictorH2 = [
-  { latitude: 46.251501, longitude: 20.15004, weight: 100 },
-];
-const pointsKissErno1 = [
-  { latitude: 46.254992, longitude: 20.147608, weight: 90 },
-];
-const pointsKissErno2 = [
-  { latitude: 46.254699, longitude: 20.148272, weight: 50 },
-];
-const pointsFeketeSas = [
-  { latitude: 46.255136, longitude: 20.148202, weight: 10 },
-];
 
 function Map() {
   function handlePress(coordinate) {
@@ -172,13 +171,50 @@ function Map() {
   ];
 
   const onRegionChangeHandler = (region) => {
-    const newRadius = 1 / (3 * region.latitudeDelta);
-    setRadius(newRadius);
+    const newRadius = (1 / Math.sqrt(20 * region.latitudeDelta)) * 10;
+    if (Math.round(newRadius * 1000) !== Math.round(radius * 1000)) {
+      console.log("setRadius");
+      setRadius(newRadius);
+    }
   };
   console.log(radius);
 
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const [imageVersion, setImageVersion] = useState(0);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setImageVersion((version) => version + 1)
+      const newImageUrl = `https://live.onlinecamera.net/207szegedomterthumbnail2.jpg?uniq=0.961870666192049${imageVersion.toString().split('').reverse().join('')}`;
+      await Image.prefetch(newImageUrl);
+      console.log(newImageUrl)
+      setImageUrl(newImageUrl)
+    }, 5000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [setImageUrl, setImageVersion, imageVersion])
+
   return (
     <View style={styles.container}>
+      <Modal
+          animationType="slide"
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+      >
+        {imageUrl && <Image
+            style={styles.liveImage}
+            fadeDuration={0}
+            source={{
+              uri: imageUrl,
+            }}
+        />}
+      </Modal>
       <MapView
         provider={"google"}
         style={styles.map}
@@ -222,8 +258,11 @@ function Map() {
         />
         <Marker
           coordinate={{ latitude: 46.247744, longitude: 20.148432 }}
-          image={require("./assets/camera_small.png")}
-        />
+          onPress={() => setModalVisible(true)}
+          anchor={{x: 0,y: 0}}
+        >
+          <Image style={styles.cameraMarker} source={require("./assets/camera_small.png")}/>
+        </Marker>
         <ParkingMeters/>
       </MapView>
     </View>
@@ -237,9 +276,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  cameraMarker: {
+    width: 20,
+    height: 20,
+  },
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  liveImage: {
+    flex: 1,
+    resizeMode: "contain",
+    justifyContent: "center"
   },
 });
 
