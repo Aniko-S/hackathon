@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
+import MapView, { Polygon, Heatmap, Marker, Circle } from "react-native-maps";
 import { Dimensions, StyleSheet, View, Modal, ImageBackground, Image } from "react-native";
 import navigation from "./Navigation";
 import ParkingMeters from "./ParkingMeters";
@@ -228,18 +228,18 @@ function Map() {
         onLongPress={(event) => handlePress(event.nativeEvent.coordinate)}
       >
         <Polygon
-          key="1"
-          coordinates={yellowCordinates}
-          strokeColor="rgba(225, 209, 10, 1)"
-          fillColor="rgba(225, 209, 10, 0.3)"
-          strokeWidth={1}
+            key="1"
+            coordinates={yellowCordinates}
+            strokeColor="rgba(225, 209, 10, 1)"
+            fillColor="rgba(225, 209, 10, 0.3)"
+            strokeWidth={1}
         />
         <Polygon
-          key="2"
-          coordinates={greenCordinates}
-          strokeColor="rgba(63, 195, 128, 1)"
-          fillColor="rgba(63, 195, 128, 0.3)"
-          strokeWidth={1}
+            key="2"
+            coordinates={greenCordinates}
+            strokeColor="rgba(63, 195, 128, 1)"
+            fillColor="rgba(63, 195, 128, 0.3)"
+            strokeWidth={1}
         />
 
         <Heatmap
@@ -249,13 +249,16 @@ function Map() {
           opacity={0.5}
           heatmapMode={"POINTS_WEIGHT"}
         />
-        {parkingLots.length > 0 && <Heatmap
+        {(parkingLots.length > 0 && false) && <Heatmap
             points={parkingLots}
             gradient={gradient}
             radius={radius}
             opacity={0.5}
             heatmapMode={"POINTS_WEIGHT"}
         />}
+        {
+          parkingLots.map((point, index) => <Circle zIndex={10} key={index} fillColor={point.weight === 1 ? "#d72e2e" : "#1ea71e"} strokeWidth={0} center={point} radius={2}/>)
+        }
         <Marker
           coordinate={{ latitude: 46.247744, longitude: 20.148432 }}
           onPress={() => setModalVisible(true)}

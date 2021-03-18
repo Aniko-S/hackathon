@@ -20,7 +20,7 @@ export default function useParkingLots() {
                 longitude: point.longitude,
                 weight: point.isFree ? 0.1 : 1,
             })))
-        }, 3000)
+        }, 1000)
 
         return () => {
             clearInterval(interval)
