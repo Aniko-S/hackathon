@@ -33,6 +33,7 @@ for (
 }
 
 function Map() {
+    
   const greenCordinates = [
     { latitude: 46.256037, longitude: 20.157685 },
     { latitude: 46.256596, longitude: 20.157353 },
@@ -133,22 +134,25 @@ function Map() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        //onPress={ (event) => handlePress(event.nativeEvent.coordinate) }
       >
-        <Polygon
+
+<Polygon
+            key="1"
           coordinates={yellowCordinates}
-          holes={[greenCordinates]}
           strokeColor="rgba(225, 209, 10, 1)"
           fillColor="rgba(225, 209, 10, 0.3)"
           strokeWidth={1}
-        />
-        {
-          <Polygon
+        /> 
+                <Polygon
+        key='2'
             coordinates={greenCordinates}
             strokeColor="rgba(63, 195, 128, 1)"
             fillColor="rgba(63, 195, 128, 0.3)"
             strokeWidth={1}
-          />
-        }
+        />  
+
+     
         <MapView.Heatmap
           points={pointsSzechenyi}
           gradient={{
