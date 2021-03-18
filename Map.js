@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import MapView, { Circle, Heatmap, Marker, Polygon } from 'react-native-maps'
-import { Dimensions, Image, Modal, StyleSheet, View } from 'react-native'
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Modal,
+  Image,
+  Text,
+  Button,
+} from 'react-native'
+import Checkbox from 'expo-checkbox'
 import navigation from './Navigation'
-import ParkingMeters from './ParkingMeters'
-import useParkingLots from './useParkingLots'
+import YellowParkingMeters from './YellowParkingMeters'
+import GreenParkingMeters from './GreenParkingMeters'
 
 const pointsSzechenyi = []
 let startI = 46.252995
@@ -182,6 +191,9 @@ function Map() {
   }
 
   const [modalVisible, setModalVisible] = useState(false)
+  const [modalForSettings, setModalForSetting] = useState(false)
+  const [yellowZone, setYellowZone] = useState(true)
+  const [greenZone, setGreenZone] = useState(true)
 
   const [imageVersion, setImageVersion] = useState(0)
   const [imageUrl, setImageUrl] = useState(null)
@@ -222,6 +234,40 @@ function Map() {
           />
         )}
       </Modal>
+      <Modal
+        animationType="slide"
+        visible={modalForSettings}
+        onRequestClose={() => {
+          setModalForSetting(!modalForSettings)
+        }}
+      >
+        <View style={styles.modalView}>
+          <Text>Szűrők:</Text>
+          <View style={styles.checkboxView}>
+            <Checkbox
+              style={styles.checkbox}
+              value={yellowZone}
+              onValueChange={() => setYellowZone(!yellowZone)}
+            />
+            <Text style={styles.paragraph}>Sárga zóna</Text>
+          </View>
+          <View style={styles.checkboxView}>
+            <Checkbox
+              style={styles.checkbox}
+              value={greenZone}
+              onValueChange={() => setGreenZone(!greenZone)}
+            />
+            <Text style={styles.paragraph}>Zöld zóna</Text>
+          </View>
+          <Button title="Bezárás" onPress={() => setModalForSetting(false)} />
+        </View>
+      </Modal>
+      <TouchableOpacity
+        onPress={() => console.log('cica')}
+        style={{ backgroundColor: 'blue' }}
+      >
+        <Text style={{ fontSize: 20, color: '#fff' }}>Pick a photo</Text>
+      </TouchableOpacity>
       <MapView
         provider={'google'}
         style={styles.map}
@@ -285,8 +331,19 @@ function Map() {
             source={require('./assets/camera_small.png')}
           />
         </Marker>
-        <ParkingMeters />
+
+        {yellowZone && <YellowParkingMeters />}
+        {greenZone && <GreenParkingMeters />}
       </MapView>
+      <View
+        style={{
+          position: 'absolute', //use absolute position to show button on top of the map
+          top: 50, //for center align
+          alignSelf: 'flex-end', //for align to right
+        }}
+      >
+        <Button title="Szűrők" onPress={() => setModalForSetting(true)} />
+      </View>
     </View>
   )
 }
@@ -310,6 +367,29 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  checkboxView: {
+    flexDirection: 'row',
   },
 })
 
