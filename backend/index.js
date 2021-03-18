@@ -10,6 +10,10 @@ app.use(bodyParser.json());
 // 46.247898, 20.148969
 // 13 hely
 
+// 46.2482361, 20.1492334
+// 46.2479085, 20.1489853
+// 10 hely
+
 const idsLeft = [
   "YpZCGyzJU",
   "0VPigWedx",
@@ -40,7 +44,33 @@ for (let i = 0; i < 13; i++) {
   };
 }
 
-console.log(coordinates);
+const firstR = { x: 46.2482361, y: 20.1492334 };
+const lastR = { x: 46.2479085, y: 20.1489853 };
+const stepR = { x: (firstR.x - lastR.x) / 9, y: (firstR.y - lastR.y) / 9 };
+const idsRight = [
+  "rLSW1Pbdb",
+  "U0tamrRUc",
+  "e0vCM72GS",
+  "Mmjob5txr",
+  "fuTN94itH",
+  "4Ca_Ft75X",
+  "TbRn-vOeX",
+  "8Knl8fbtR",
+  "gJl1humPa",
+  "rAShfhlWS",
+];
+
+for (let i = 0; i < 10; i++) {
+  coordinates = {
+    ...coordinates,
+    [idsRight[9 - i]]: {
+      latitude: lastR.x + i * stepR.x,
+      longitude: lastR.y + i * stepR.y,
+    },
+  };
+}
+
+console.log("coordinates:", coordinates);
 
 app.post("/parking", (req, res) => {
   Object.keys(req.body).forEach((id) => {
@@ -56,3 +86,14 @@ app.get("/parking", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+let coordinatesRight = {};
+for (let i = 0; i < 10; i++) {
+  coordinatesRight = {
+    ...coordinatesRight,
+    [idsRight[10 - i]]: {
+      latitude: lastR.x + i * stepR.x,
+      longitude: lastR.y + i * stepR.y,
+    },
+  };
+}
