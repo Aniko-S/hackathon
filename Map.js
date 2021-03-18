@@ -2,6 +2,36 @@ import React from "react";
 import MapView, {Polygon} from "react-native-maps";
 import {Dimensions, StyleSheet, View} from "react-native";
 
+const pointsSzechenyi = [];
+let startI = 46.252995;
+let startJ = 20.149482;
+let endI = 46.254356;
+let endJ = 20.150681;
+let stepI = (endI - startI) / 40;
+let stepJ = (endJ - startJ) / 40;
+for (
+  let i = startI, j = startJ;
+  i <= endI && j <= endJ;
+  i += stepI, j += stepJ
+) {
+  pointsSzechenyi.push({ latitude: i, longitude: j, weight: 5 });
+}
+
+const pointsDani = [];
+startI = 46.249973;
+startJ = 20.142645;
+endI = 46.251012;
+endJ = 20.143532;
+stepI = (endI - startI) / 40;
+stepJ = (endJ - startJ) / 40;
+for (
+  let i = startI, j = startJ;
+  i <= endI && j <= endJ;
+  i += stepI, j += stepJ
+) {
+  pointsDani.push({ latitude: i, longitude: j, weight: 0.5 });
+}
+
 function Map() {
     const greenCordinates = [
         {latitude: 46.256037, longitude: 20.157685},
@@ -121,6 +151,60 @@ function Map() {
 
         </View>
     );
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: 46.253,
+          longitude: 20.148,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <MapView.Heatmap
+          points={pointsSzechenyi}
+          // onZoomRadiusChange={{
+          //   zoom: [0, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+          //   radius: [
+          //     10,
+          //     10,
+          //     15,
+          //     20,
+          //     30,
+          //     60,
+          //     80,
+          //     100,
+          //     120,
+          //     150,
+          //     180,
+          //     200,
+          //     250,
+          //     250,
+          //   ],
+          // }}
+          gradient={{
+            colors: [
+              "rgba(0, 0, 255, 0.5)",
+              "#BBCF4C",
+              "#EEC20B",
+              "#F29305",
+              "#E50000",
+            ],
+            startPoints: [0, 0.25, 0.5, 0.75, 1],
+          }}
+          maxIntensity={10}
+          heatmapMode={"POINTS_WEIGHT"}
+        />
+
+        <MapView.Heatmap
+          points={pointsDani}
+          radius={20}
+          heatmapMode={"POINTS_WEIGHT"}
+        />
+      </MapView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
