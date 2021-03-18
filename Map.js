@@ -186,10 +186,11 @@ function Map() {
   useEffect(() => {
     const interval = setInterval(async () => {
       setImageVersion((version) => version + 1)
-      const newImageUrl = `https://live.onlinecamera.net/207szegedomterthumbnail2.jpg?uniq=${imageVersion}`;
+      const newImageUrl = `https://live.onlinecamera.net/207szegedomterthumbnail2.jpg?uniq=0.961870666192049${imageVersion.toString().split('').reverse().join('')}`;
       await Image.prefetch(newImageUrl);
+      console.log(newImageUrl)
       setImageUrl(newImageUrl)
-    }, 10000)
+    }, 5000)
 
     return () => {
       clearInterval(interval)
