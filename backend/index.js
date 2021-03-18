@@ -29,8 +29,8 @@ const idsLeft = [
   "dHfU0CahNg",
   "fvU31Q7klw",
 ];
-const first = { x: 46.248363, y: 20.149343 };
-const last = { x: 46.247898, y: 20.148969 };
+const first = { x: 46.248369, y: 20.149304 };
+const last = { x: 46.247738, y: 20.148778 };
 const step = { x: (first.x - last.x) / 12, y: (first.y - last.y) / 12 };
 
 let coordinates = {};
@@ -44,8 +44,8 @@ for (let i = 0; i < 13; i++) {
   };
 }
 
-const firstR = { x: 46.2482361, y: 20.1492334 };
-const lastR = { x: 46.2479085, y: 20.1489853 };
+const firstR = { x: 46.248226, y: 20.149270 };
+const lastR = { x: 46.247703, y: 20.148867 };
 const stepR = { x: (firstR.x - lastR.x) / 9, y: (firstR.y - lastR.y) / 9 };
 const idsRight = [
   "rLSW1Pbdb",
