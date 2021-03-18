@@ -171,8 +171,8 @@ function Map() {
   ];
 
   const onRegionChangeHandler = (region) => {
-    const newRadius = 1 / (Math.sqrt(20 * region.latitudeDelta)) * 5;
-    if(Math.round(newRadius*100) !== Math.round(radius*100)) {
+    const newRadius = 1 / (Math.sqrt(20 * region.latitudeDelta)) * 10;
+    if(Math.round(newRadius*1000) !== Math.round(radius*1000)) {
         console.log('setRadius')
         setRadius(newRadius);
     }
