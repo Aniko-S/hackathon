@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import MapView, {Polygon, Heatmap, Marker} from "react-native-maps";
+import MapView, { Polygon, Heatmap, Marker } from "react-native-maps";
 import { Dimensions, StyleSheet, View } from "react-native";
-import navigation from "./Navigation"
+import navigation from "./Navigation";
 
 const pointsSzechenyi = [];
 let startI = 46.252995;
@@ -30,7 +30,7 @@ endJ = 20.143532;
 stepI = (endI - startI) / 20;
 stepJ = (endJ - startJ) / 20;
 for (
-    let i = startI, j = startJ;
+  let i = startI, j = startJ;
   i <= endI && j <= endJ;
   i += stepI, j += stepJ
 ) {
@@ -75,11 +75,10 @@ const pointsFeketeSas = [
 ];
 
 function Map() {
+  function handlePress(coordinate) {
+    navigation(coordinate.latitude, coordinate.longitude);
+  }
 
-    function handlePress(coordinate) {
-        navigation(coordinate.latitude, coordinate.longitude)
-    }
-    
   const [radius, setRadius] = useState(10);
   const greenCordinates = [
     { latitude: 46.256037, longitude: 20.157685 },
@@ -189,53 +188,23 @@ function Map() {
           longitudeDelta: 0.0421,
         }}
         onRegionChange={onRegionChangeHandler}
-        onLongPress={ (event) => handlePress(event.nativeEvent.coordinate) }
+        onLongPress={(event) => handlePress(event.nativeEvent.coordinate)}
       >
-
-<Polygon
-                    key="1"
-                    coordinates={yellowCordinates}
-                    strokeColor="rgba(225, 209, 10, 1)"
-                    fillColor="rgba(225, 209, 10, 0.3)"
-                    strokeWidth={1}
-                />
-                <Polygon
-                    key='2'
-                    coordinates={greenCordinates}
-                    strokeColor="rgba(63, 195, 128, 1)"
-                    fillColor="rgba(63, 195, 128, 0.3)"
-                    strokeWidth={1}
-                />
-
-                <MapView.Heatmap
-                    points={pointsSzechenyi}
-                    gradient={{
-                        colors: [
-                            "rgba(0, 0, 255, 0)",
-                            "#BBCF4C",
-                            "#EEC20B",
-                  "#F29305",
-                  "#E50000",
-              ],
-              startPoints: [ 0, 0.25, 0.5, 0.75, 1],
-              colorMapSize: 256
-          }}
-          radius={250}
-        {/*<Polygon
+        <Polygon
+          key="1"
           coordinates={yellowCordinates}
-          holes={[greenCordinates]}
           strokeColor="rgba(225, 209, 10, 1)"
           fillColor="rgba(225, 209, 10, 0.3)"
           strokeWidth={1}
         />
-        {
-          <Polygon
-            coordinates={greenCordinates}
-            strokeColor="rgba(63, 195, 128, 1)"
-            fillColor="rgba(63, 195, 128, 0.3)"
-            strokeWidth={1}
-          />
-        }*/}
+        <Polygon
+          key="2"
+          coordinates={greenCordinates}
+          strokeColor="rgba(63, 195, 128, 1)"
+          fillColor="rgba(63, 195, 128, 0.3)"
+          strokeWidth={1}
+        />
+
         <Heatmap
           points={pointsSzechenyi}
           gradient={gradient}
@@ -243,24 +212,33 @@ function Map() {
           opacity={0.5}
           heatmapMode={"POINTS_WEIGHT"}
         />
-                <Marker coordinate={{latitude: 46.247744, longitude: 20.148432}}
-                        image={require('./assets/camera_small.png')}/>
+        <Heatmap
+          points={pointsDani}
+          gradient={gradient}
+          radius={radius}
+          opacity={0.5}
+          heatmapMode={"POINTS_WEIGHT"}
+        />
+        <Marker
+          coordinate={{ latitude: 46.247744, longitude: 20.148432 }}
+          image={require("./assets/camera_small.png")}
+        />
       </MapView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    map: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  map: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
 });
 
 export default Map;
