@@ -37,19 +37,19 @@ for (
   pointsDani.push({
     latitude: i,
     longitude: j,
-    weight: Math.round(Math.random()) + 0.1,
+    weight: Math.round(Math.random()),
   });
 }
 
 const gradient = {
   colors: [
     "rgb(0, 225, 0)",
-    "rgb(0, 225, 0)",
+    "rgb(153, 225, 51)",
     "rgb(255, 225, 0)",
     "rgb(255, 153, 51)",
     "rgb(255, 0, 0)",
   ],
-  startPoints: [0.1, 0.6, 0.8, 0.9, 1],
+  startPoints: [0.1, 0.5, 0.7, 0.9, 1],
   colorMapSize: 256,
 };
 
