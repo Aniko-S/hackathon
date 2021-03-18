@@ -44,12 +44,13 @@ for (
 const gradient = {
   colors: [
     "rgb(0, 225, 0)",
+    "rgb(178, 225, 102)",
     "rgb(153, 225, 51)",
     "rgb(255, 225, 0)",
     "rgb(255, 153, 51)",
     "rgb(255, 0, 0)",
   ],
-  startPoints: [0.1, 0.5, 0.7, 0.9, 1],
+  startPoints: [0.1, 0.3, 0.8, 0.85, 0.99, 1],
   colorMapSize: 256,
 };
 
@@ -171,10 +172,10 @@ function Map() {
   ];
 
   const onRegionChangeHandler = (region) => {
-    const newRadius = 1 / (Math.sqrt(20 * region.latitudeDelta)) * 10;
-    if(Math.round(newRadius*1000) !== Math.round(radius*1000)) {
-        console.log('setRadius')
-        setRadius(newRadius);
+    const newRadius = (1 / Math.sqrt(20 * region.latitudeDelta)) * 10;
+    if (Math.round(newRadius * 1000) !== Math.round(radius * 1000)) {
+      console.log("setRadius");
+      setRadius(newRadius);
     }
   };
   console.log(radius);
