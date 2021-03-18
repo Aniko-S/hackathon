@@ -1,6 +1,7 @@
 import React from "react";
 import MapView, { Polygon, Heatmap } from "react-native-maps";
 import { Dimensions, StyleSheet, View } from "react-native";
+import navigation from "./Navigation"
 
 const pointsSzechenyi = [];
 let startI = 46.250995;
@@ -41,6 +42,10 @@ for (
 }
 
 function Map() {
+    
+    function handlePress(coordinate) {
+        navigation(coordinate.latitude, coordinate.longitude)
+    }
     
   const greenCordinates = [
     { latitude: 46.256037, longitude: 20.157685 },
@@ -143,7 +148,7 @@ function Map() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        //onPress={ (event) => handlePress(event.nativeEvent.coordinate) }
+        onLongPress={ (event) => handlePress(event.nativeEvent.coordinate) }
       >
 
 <Polygon
