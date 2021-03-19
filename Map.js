@@ -250,7 +250,7 @@ function Map() {
             <Checkbox
               style={styles.checkbox}
               value={yellowZone}
-              onValueChange={() => setYellowZone((yellowZone) => !yellowZone)}
+              onValueChange={(value) => setYellowZone(value)}
             />
             <Text style={styles.paragraph}>Sárga zóna</Text>
           </View>
@@ -258,7 +258,7 @@ function Map() {
             <Checkbox
               style={styles.checkbox}
               value={greenZone}
-              onValueChange={() => setGreenZone((greenZone) => !greenZone)}
+              onValueChange={(value) => setGreenZone(value)}
             />
             <Text style={styles.paragraph}>Zöld zóna</Text>
           </View>
@@ -266,7 +266,7 @@ function Map() {
             <Checkbox
               style={styles.checkbox}
               value={heatmap}
-              onValueChange={() => setHeatmap((heatmap) => !heatmap)}
+              onValueChange={(value) => setHeatmap(value)}
             />
             <Text style={styles.paragraph}>Hőtérkép</Text>
           </View>
