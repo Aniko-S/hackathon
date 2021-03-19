@@ -252,7 +252,7 @@ function Map() {
               value={yellowZone}
               onValueChange={(value) => setYellowZone(value)}
             />
-            <Text style={styles.paragraph}>Sárga zóna</Text>
+            <Text style={styles.paragraph}>Sárga zóna automatái</Text>
           </View>
           <View style={styles.checkboxView}>
             <Checkbox
@@ -260,7 +260,7 @@ function Map() {
               value={greenZone}
               onValueChange={(value) => setGreenZone(value)}
             />
-            <Text style={styles.paragraph}>Zöld zóna</Text>
+            <Text style={styles.paragraph}>Zöld zóna automatái</Text>
           </View>
           <View style={styles.checkboxView}>
             <Checkbox
