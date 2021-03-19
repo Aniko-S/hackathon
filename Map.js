@@ -196,6 +196,7 @@ function Map() {
   const [modalForSettings, setModalForSetting] = useState(false)
   const [yellowZone, setYellowZone] = useState(true)
   const [greenZone, setGreenZone] = useState(true)
+  const [heatmap, setHeatmap] = useState(true)
 
   const [imageVersion, setImageVersion] = useState(0)
   const [imageUrl, setImageUrl] = useState(null)
@@ -261,6 +262,14 @@ function Map() {
             />
             <Text style={styles.paragraph}>Zöld zóna</Text>
           </View>
+          <View style={styles.checkboxView}>
+            <Checkbox
+              style={styles.checkbox}
+              value={heatmap}
+              onValueChange={() => setHeatmap((heatmap) => !heatmap)}
+            />
+            <Text style={styles.paragraph}>Hőtérkép</Text>
+          </View>
           <Button title="Bezárás" onPress={() => setModalForSetting(false)} />
         </View>
       </Modal>
@@ -291,14 +300,16 @@ function Map() {
           strokeWidth={1}
         />
 
-        <Heatmap
-          points={pointsSzechenyi}
-          gradient={gradient}
-          radius={radius}
-          opacity={0.5}
-          heatmapMode={'POINTS_WEIGHT'}
-        />
-        {parkingLots.length > 0 && false && (
+        {heatmap && (
+          <Heatmap
+            points={pointsSzechenyi}
+            gradient={gradient}
+            radius={radius}
+            opacity={0.5}
+            heatmapMode={'POINTS_WEIGHT'}
+          />
+        )}
+        {parkingLots.length > 0 && heatmap && (
           <Heatmap
             points={parkingLots}
             gradient={gradient}
