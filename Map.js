@@ -245,7 +245,7 @@ function Map() {
         }}
       >
         <View style={styles.modalView}>
-          <Text>Szűrők:</Text>
+          <Text style={styles.spacer}>Szűrők:</Text>
           <View style={styles.checkboxView}>
             <Checkbox
               style={styles.checkbox}
@@ -270,7 +270,9 @@ function Map() {
             />
             <Text style={styles.paragraph}>Hőtérkép</Text>
           </View>
-          <Button title="Bezárás" onPress={() => setModalForSetting(false)} />
+          <View style={styles.spacer}>
+            <Button title="Bezárás" onPress={() => setModalForSetting(false)} />
+          </View>
         </View>
       </Modal>
       <MapView
@@ -362,6 +364,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  spacer: {
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   cameraMarker: {
     width: 20,
     height: 20,
@@ -381,6 +387,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
+    justifyContent: 'space-between',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -397,6 +404,7 @@ const styles = StyleSheet.create({
   },
   checkboxView: {
     flexDirection: 'row',
+    width: '100%',
   },
 })
 
