@@ -13,6 +13,8 @@ import Checkbox from 'expo-checkbox'
 import navigation from './Navigation'
 import YellowParkingMeters from './YellowParkingMeters'
 import GreenParkingMeters from './GreenParkingMeters'
+import useParkingLots from './useParkingLots'
+import { TouchableOpacity } from 'react-native-web'
 
 const pointsSzechenyi = []
 let startI = 46.252995
@@ -247,7 +249,7 @@ function Map() {
             <Checkbox
               style={styles.checkbox}
               value={yellowZone}
-              onValueChange={() => setYellowZone(!yellowZone)}
+              onValueChange={() => setYellowZone((yellowZone) => !yellowZone)}
             />
             <Text style={styles.paragraph}>Sárga zóna</Text>
           </View>
@@ -255,19 +257,13 @@ function Map() {
             <Checkbox
               style={styles.checkbox}
               value={greenZone}
-              onValueChange={() => setGreenZone(!greenZone)}
+              onValueChange={() => setGreenZone((greenZone) => !greenZone)}
             />
             <Text style={styles.paragraph}>Zöld zóna</Text>
           </View>
           <Button title="Bezárás" onPress={() => setModalForSetting(false)} />
         </View>
       </Modal>
-      <TouchableOpacity
-        onPress={() => console.log('cica')}
-        style={{ backgroundColor: 'blue' }}
-      >
-        <Text style={{ fontSize: 20, color: '#fff' }}>Pick a photo</Text>
-      </TouchableOpacity>
       <MapView
         provider={'google'}
         style={styles.map}
